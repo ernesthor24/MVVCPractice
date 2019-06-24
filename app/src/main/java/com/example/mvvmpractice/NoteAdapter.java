@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import java.util.List;
 
 public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
     private OnItemClickListener listener;
@@ -16,21 +15,21 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
     public NoteAdapter() {
         super(DIFF_CALLBACK);
     }
-
     private static final DiffUtil.ItemCallback<Note> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<Note>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull Note note, @NonNull Note t1) {
-                    return note.getId() == t1.getId();
-                }
+            @Override
+            public boolean areItemsTheSame(Note oldItem, Note newItem) {
+                return oldItem.getId() == newItem.getId();
+                //return false;
+            }
 
-                @Override
-                public boolean areContentsTheSame(@NonNull Note note, @NonNull Note t1) {
-                    return note.getTitle().equals(t1.getTitle()) &&
-                            note.getTitle().equals(t1.getDescription()) &&
-                            note.getPriority() == t1.getPriority();
-                }
-            };
+            @Override
+            public boolean areContentsTheSame(Note oldItem, Note newItem) {
+                return oldItem.getTitle().equals(newItem.getTitle()) &&
+                        oldItem.getTitle().equals(newItem.getDescription()) &&
+                        oldItem.getPriority() == newItem.getPriority();
+            }
+    };
 
     @NonNull
     @Override
